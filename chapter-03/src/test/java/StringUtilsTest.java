@@ -5,7 +5,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-public class PracticalUnitTestingTest {
+public class StringUtilsTest {
 
 	@ParameterizedTest
 	@CsvSource({
@@ -15,7 +15,7 @@ public class PracticalUnitTestingTest {
 			"morela, alerom"
 	})
 	void whenStringIsWord_thenOKTest(String input, String expected) {
-		String actual = PracticalUnitTesting.reverse(input);
+		String actual = StringUtils.reverse(input);
 		assertThat(actual).isNotNull();
 		assertThat(actual).isEqualTo(expected);
 	}
@@ -26,7 +26,7 @@ public class PracticalUnitTestingTest {
 			"practical unit testing, gnitset tinu lacitcarp"
 	})
 	void whenStringIsSentence_thenOKTest(String input, String expected) {
-		String actual = PracticalUnitTesting.reverse(input);
+		String actual = StringUtils.reverse(input);
 		assertThat(actual).isNotNull();
 		assertThat(actual).isEqualTo(expected);
 	}
@@ -38,7 +38,7 @@ public class PracticalUnitTestingTest {
 			"' \t \n', '\n \t '"
 	})
 	void whenStringIsBlank_thenOKTest(String input, String expected) {
-		String actual = PracticalUnitTesting.reverse(input);
+		String actual = StringUtils.reverse(input);
 		assertThat(input).isNotNull();
 		// I'm allowing here for *not* reversing the input string,
 		// in case it's blank. Thus, the actual output may be the same as input.
@@ -54,7 +54,7 @@ public class PracticalUnitTestingTest {
 			"\\\\//)(*&^ %$#@!, !@#$% ^&*()//\\\\"
 	})
 	void whenStringContainsSpecialCharactersAndDigits_thenOKTest(String input, String expected) {
-		String actual = PracticalUnitTesting.reverse(input);
+		String actual = StringUtils.reverse(input);
 		assertThat(actual).isNotNull();
 		assertThat(actual).isEqualTo(expected);
 	}
@@ -63,6 +63,6 @@ public class PracticalUnitTestingTest {
 	void whenStringIsNull_thenReturnNullTest() {
 		String input = null;
 		assertThatExceptionOfType(NullPointerException.class)
-				.isThrownBy(() -> PracticalUnitTesting.reverse(input));
+				.isThrownBy(() -> StringUtils.reverse(input));
 	}
 }
