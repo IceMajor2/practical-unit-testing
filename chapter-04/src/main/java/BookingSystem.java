@@ -1,37 +1,41 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class BookingSystem {
 
-	private List<Integer> bookings;
+	private Set<Integer> bookings;
 
 	/**
 	 * Allows to book multiple hours: both parameters are inclusive
 	 */
-	public void book(int from, int to) {
-		if(to < from) {
+	public boolean book(int from, int to) {
+		if (to < from) {
 			to += 24;
 		}
-		for(int i = from; i <= to; i++) {
-			bookings.add(i % 24);
+		Set<Integer> hoursToBook = new HashSet<>();
+		for (int i = from; i <= to; i++) {
+			int hour = i % 24;
+			if(bookings.contains(hour)) return false;
+			hoursToBook.add(hour);
 		}
+		bookings.addAll(hoursToBook);
+		return true;
 	}
 
 	/**
 	 * Book only a single hour.
-	 *
-	 * @return
 	 */
 	public boolean book(int hour) {
-		book(hour, hour);
-		return false;
+		return book(hour, hour);
 	}
 
-	public List<Integer> getBookings() {
+	public Set<Integer> getBookings() {
 		return bookings;
 	}
 
-	public void setBookings(List<Integer> bookings) {
-		this.bookings = new ArrayList<>(bookings);
+	public void setBookings(Set<Integer> bookings) {
+		this.bookings = new LinkedHashSet<>(bookings);
 	}
 }
