@@ -11,6 +11,7 @@ public class PasswordValidator {
 	private static final int MIN_SYMBOLS = 1;
 	private static final int MIN_DIGITS = 1;
 
+	private static final String UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	private static final String SYMBOLS = "~`!@#$%^&*()_-+={[}]|\\:;\"'<,>.?/";
 	private static final String DIGITS = "0123456789";
 
@@ -20,6 +21,9 @@ public class PasswordValidator {
 			return false;
 		}
 		if(!StringUtils.containsAny(password, DIGITS)) {
+			return false;
+		}
+		if(!StringUtils.containsAny(password, UPPERCASE)) {
 			return false;
 		}
 		return true;
