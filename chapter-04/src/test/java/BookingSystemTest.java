@@ -30,7 +30,7 @@ class BookingSystemTest {
 	@ParameterizedTest
 	@CsvSource({
 			"21, 22, [21;22]",
-			"23, 1, [23;24;1]",
+			"23, 1, [23;0;1]",
 			"2, 3, [2;3]"
 	})
 	void whenBookingMultipleFreeHours_thenOkTest(int from, int to, String newHoursStr) {
