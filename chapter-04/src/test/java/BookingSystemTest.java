@@ -15,10 +15,7 @@ class BookingSystemTest {
 	@BeforeEach
 	void setUp() {
 		SUT = new BookingSystem();
-		SUT.book(8, 10);
-		SUT.book(12, 13);
-		SUT.book(14, 17);
-		SUT.book(19, 21);
+		SUT.setBookings(bookings);
 	}
 
 	@Test
