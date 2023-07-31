@@ -28,4 +28,12 @@ class PasswordValidatorTest {
 				.withFailMessage("Validation should be false as everything but uppercase letter count is ok")
 				.isFalse();
 	}
+
+	@ParameterizedTest
+	@ValueSource(strings = {"CG'+Y.P4&NS$2]", ">$'6D77-#{M5&[KHX}+", "+-_4H+>RWP35"})
+	void shouldReturnInvalidOnPasswordNoLowercaseTest(String password) {
+		assertThat(PasswordValidator.isValid(password))
+				.withFailMessage("Validation should be false as everything but lowercase letter count is ok")
+				.isFalse();
+	}
 }
