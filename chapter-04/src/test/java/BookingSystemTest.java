@@ -25,7 +25,7 @@ class BookingSystemTest {
 	@Test
 	void getBookedHours_shouldReturnListOfBookedHoursTest() {
 		List<Integer> actualBookings = SUT.getBookings();
-		assertThat(actualBookings).containsExactlyElementsOf(bookings);
+		assertThat(actualBookings).hasSameElementsAs(bookings);
 	}
 
 	@ParameterizedTest
@@ -47,6 +47,15 @@ class BookingSystemTest {
 		assertThat(SUT.getBookings()).doesNotContain(newHours);
 		SUT.book(from, to);
 		assertThat(SUT.getBookings()).contains(newHours);
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = {15, 20, 8, 11})
+	void whenBookingTakenHour_returnFalseTest(int hour) {
+		boolean result = SUT.book(hour);
+		assertThat(result)
+				.withFailMessage("Already-booked hour should not be allowed to be booked again")
+				.isFalse();
 	}
 
 	private Integer[] extractIntegers(String string) {

@@ -19,9 +19,12 @@ public class BookingSystem {
 
 	/**
 	 * Book only a single hour.
+	 *
+	 * @return
 	 */
-	public void book(int hour) {
+	public boolean book(int hour) {
 		book(hour, hour);
+		return false;
 	}
 
 	public List<Integer> getBookings() {
