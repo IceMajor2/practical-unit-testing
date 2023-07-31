@@ -44,4 +44,12 @@ class PasswordValidatorTest {
 				.withFailMessage("Validation should be false as everything but symbol presence is ok")
 				.isFalse();
 	}
+
+	@ParameterizedTest
+	@ValueSource(strings = {"eT%P#V'vh6^", "2p:,Du_F", "E7:x7j"})
+	void shouldReturnInvalidOnPasswordTooShortTest(String password) {
+		assertThat(PasswordValidator.isValid(password))
+				.withFailMessage("Validation should be false as everything but password length is ok")
+				.isFalse();
+	}
 }
