@@ -12,7 +12,6 @@ public class Regex {
 		Matcher matcher = pattern.matcher(input);
 
 		List<String> sequences = new ArrayList<>();
-		StringBuilder sb = new StringBuilder("");
 		while(matcher.find()) {
 			sequences.add(matcher.group());
 		}
