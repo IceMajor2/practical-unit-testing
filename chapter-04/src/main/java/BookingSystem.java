@@ -1,4 +1,3 @@
-import java.util.Collections;
 import java.util.List;
 
 public class BookingSystem {
@@ -10,7 +9,7 @@ public class BookingSystem {
 	}
 
 	public List<Integer> getBookings() {
-		return Collections.emptyList();
+		return bookings;
 	}
 
 	public void setBookings(List<Integer> bookings) {
