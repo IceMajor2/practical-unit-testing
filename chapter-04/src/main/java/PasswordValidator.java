@@ -1,3 +1,6 @@
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class PasswordValidator {
 
 	private static final int MIN_CHARS = 12;
@@ -9,6 +12,14 @@ public class PasswordValidator {
 	private static final String SYMBOLS = "~`!@#$%^&*()_-+={[}]|\\:;\"'<,>.?/";
 
 	public static boolean isValid(String password) {
-		return false;
+		List<Character> passwordChars = stringToCharList(password);
+		if(passwordChars.size() < MIN_CHARS) {
+			return false;
+		}
+		return true;
+	}
+
+	private static List<Character> stringToCharList(String string) {
+		return string.chars().mapToObj(c -> (char) c).collect(Collectors.toList());
 	}
 }
