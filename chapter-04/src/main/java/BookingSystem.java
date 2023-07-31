@@ -1,11 +1,20 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class BookingSystem {
 
 	private List<Integer> bookings;
 
+	/**
+	 * Allows to book multiple hours: both parameters are inclusive
+	 */
 	public void book(int from, int to) {
-
+		if(to < from) {
+			to += 24;
+		}
+		for(int i = from; i <= to; i++) {
+			bookings.add(i % 24);
+		}
 	}
 
 	public List<Integer> getBookings() {
@@ -13,6 +22,6 @@ public class BookingSystem {
 	}
 
 	public void setBookings(List<Integer> bookings) {
-		this.bookings = bookings;
+		this.bookings = new ArrayList<>(bookings);
 	}
 }
