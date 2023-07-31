@@ -36,4 +36,12 @@ class PasswordValidatorTest {
 				.withFailMessage("Validation should be false as everything but lowercase letter count is ok")
 				.isFalse();
 	}
+
+	@ParameterizedTest
+	@ValueSource(strings = {"7nYvL5vK3ddK", "Chu6zHuyqSd8V", "mKzCWgYarhHX2vLHvm5nwa"})
+	void shouldReturnInvalidOnPasswordNoSymbolTest(String password) {
+		assertThat(PasswordValidator.isValid(password))
+				.withFailMessage("Validation should be false as everything but symbol presence is ok")
+				.isFalse();
+	}
 }
