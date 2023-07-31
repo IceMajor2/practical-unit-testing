@@ -20,4 +20,12 @@ class PasswordValidatorTest {
 				.withFailMessage("Validation should be false as everything but digits is ok")
 				.isFalse();
 	}
+
+	@ParameterizedTest
+	@ValueSource(strings = {"&n2'$xvg<c{m", "4d)@,a_k<r3>?^zxe^", "4>*=)q3-q/y:$w"})
+	void shouldReturnInvalidOnPasswordNoUppercaseTest(String password) {
+		assertThat(PasswordValidator.isValid(password))
+				.withFailMessage("Validation should be false as everything but uppercase letter count is ok")
+				.isFalse();
+	}
 }
