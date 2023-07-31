@@ -21,7 +21,7 @@ public class BookingSystem {
 	 * Book only a single hour.
 	 */
 	public void book(int hour) {
-
+		book(hour, hour);
 	}
 
 	public List<Integer> getBookings() {
