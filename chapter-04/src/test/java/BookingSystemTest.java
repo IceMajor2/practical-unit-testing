@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -25,6 +26,14 @@ class BookingSystemTest {
 	void getBookedHours_shouldReturnListOfBookedHoursTest() {
 		List<Integer> actualBookings = SUT.getBookings();
 		assertThat(actualBookings).containsExactlyElementsOf(bookings);
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = {1, 11, 21})
+	void whenBookingSingleFreeHour_thenOkTest(int hour) {
+		assertThat(SUT.getBookings()).doesNotContain(hour);
+		SUT.book(hour);
+		assertThat(SUT.getBookings()).contains(hour);
 	}
 
 	@ParameterizedTest

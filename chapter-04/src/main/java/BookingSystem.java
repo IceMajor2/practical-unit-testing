@@ -17,6 +17,13 @@ public class BookingSystem {
 		}
 	}
 
+	/**
+	 * Book only a single hour.
+	 */
+	public void book(int hour) {
+
+	}
+
 	public List<Integer> getBookings() {
 		return bookings;
 	}
