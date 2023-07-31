@@ -1,4 +1,3 @@
-import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -7,7 +6,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class BookingSystemTest {
 
@@ -69,6 +69,15 @@ class BookingSystemTest {
 	void whenMultipleBookingTakenHour_returnFalseTest(int from, int to) {
 		assertThat(SUT.book(from, to)).isFalse();
 		assertThat(SUT.getBookings()).isEqualTo(bookings);
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = { -1, 24, 25, -22, -25, 81 })
+	void givenInvalidHours_whenSingleBooking_throwIllegalArgumentExceptionTest(int hour) {
+		assertThatExceptionOfType(IllegalArgumentException.class)
+				.isThrownBy(() -> {
+					SUT.book(hour);
+				});
 	}
 
 	private Integer[] extractIntegers(String string) {
