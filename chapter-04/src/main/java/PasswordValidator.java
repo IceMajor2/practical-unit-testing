@@ -30,6 +30,9 @@ public class PasswordValidator {
 		if(!StringUtils.containsAny(password, LOWERCASE)) {
 			return false;
 		}
+		if(!StringUtils.containsAny(password, SYMBOLS)) {
+			return false;
+		}
 		return true;
 	}
 
