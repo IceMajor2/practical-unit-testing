@@ -12,4 +12,12 @@ class PasswordValidatorTest {
 				.withFailMessage("Validation should return true as password is strong enough")
 				.isTrue();
 	}
+
+	@ParameterizedTest
+	@ValueSource(strings = {"ospaLL_][/hJU", "r_j#y&YByE-n_aHY", "gX=h?e#C#*en"})
+	void shouldReturnInvalidOnPasswordNoDigitsTest(String password) {
+		assertThat(PasswordValidator.isValid(password))
+				.withFailMessage("Validation should be false as everything but digits is ok")
+				.isFalse();
+	}
 }
