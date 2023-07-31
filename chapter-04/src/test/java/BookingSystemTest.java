@@ -80,6 +80,21 @@ class BookingSystemTest {
 				});
 	}
 
+	@ParameterizedTest
+	@CsvSource({
+			"11, 24",
+			"-5, 0",
+			"25, 30",
+			"-10, -1",
+			"24, 24"
+	})
+	void givenInvalidHours_whenMultipleBooking_throwIllegalArgumentExceptionTest(int from, int to) {
+		assertThatExceptionOfType(IllegalArgumentException.class)
+				.isThrownBy(() -> {
+					SUT.book(from, to);
+				});
+	}
+
 	private Integer[] extractIntegers(String string) {
 		String substring = string.substring(string.indexOf('[') + 1, string.lastIndexOf(']'));
 		String[] numStrs = substring.split(";");
