@@ -29,13 +29,26 @@ class BookingSystemTest {
 
 	@ParameterizedTest
 	@CsvSource({
-			"21, 22",
-			"23, 1",
-			"2, 3"
+			"21, 22, [21;22]",
+			"23, 1, [23;24;1]",
+			"2, 3, [2;3]"
 	})
-	void whenBookingMultipleFreeHours_thenOkTest(int from, int to) {
-		assertThat(SUT.getBookings()).doesNotContain(21, 22, 23, 24, 1, 2, 3);
+	void whenBookingMultipleFreeHours_thenOkTest(int from, int to, String newHoursStr) {
+		Integer[] newHours = extractIntegers(newHoursStr);
+		assertThat(SUT.getBookings()).doesNotContain(newHours);
 		SUT.book(from, to);
-		assertThat(SUT.getBookings()).contains(21, 22, 23, 24, 1, 2, 3);
+		assertThat(SUT.getBookings()).contains(newHours);
+	}
+
+	private Integer[] extractIntegers(String string) {
+		String substring = string.substring(string.indexOf('[') + 1, string.lastIndexOf(']'));
+		String[] numStrs = substring.split(";");
+		Integer[] ints = new Integer[numStrs.length];
+		int index = 0;
+		for (String numStr : numStrs) {
+			ints[index] = Integer.valueOf(numStr);
+			index++;
+		}
+		return ints;
 	}
 }
