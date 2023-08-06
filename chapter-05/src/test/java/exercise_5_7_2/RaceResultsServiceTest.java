@@ -59,4 +59,17 @@ public class RaceResultsServiceTest {
 
 		verify(clientA, never()).receive(message);
 	}
+
+	@Test
+	void shouldSendMessageOnlyForCategorySubscribers() {
+		clientA.addCategory("F1", "cycling");
+		clientB.addCategory("football");
+		raceResults.addSubscriber(clientA);
+		message.addCategory("F1");
+
+		raceResults.send(message);
+
+		verify(clientA).receive(message);
+		verify(clientB, never()).receive(message);
+	}
 }
