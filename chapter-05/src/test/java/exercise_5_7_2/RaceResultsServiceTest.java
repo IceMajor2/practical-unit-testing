@@ -62,9 +62,10 @@ public class RaceResultsServiceTest {
 
 	@Test
 	void shouldSendMessageOnlyForCategorySubscribers() {
-		clientA.addCategory("F1", "cycling");
+		clientA.addCategory("F1");
 		clientB.addCategory("football");
 		raceResults.addSubscriber(clientA);
+		raceResults.addSubscriber(clientB);
 		message.addCategory("F1");
 
 		raceResults.send(message);
