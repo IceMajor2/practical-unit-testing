@@ -1,3 +1,5 @@
+package exercise_5_7_1;
+
 public class UserServiceImpl {
 	private UserDAO userDAO;
 

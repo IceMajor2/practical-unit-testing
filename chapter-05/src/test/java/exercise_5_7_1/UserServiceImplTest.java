@@ -1,3 +1,9 @@
+package exercise_5_7_1;
+
+import exercise_5_7_1.SecurityService;
+import exercise_5_7_1.User;
+import exercise_5_7_1.UserDAO;
+import exercise_5_7_1.UserServiceImpl;
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.*;
