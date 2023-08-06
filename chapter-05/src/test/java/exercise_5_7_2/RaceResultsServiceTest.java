@@ -1,10 +1,13 @@
 package exercise_5_7_2;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class RaceResultsServiceTest {
 
@@ -62,11 +65,12 @@ public class RaceResultsServiceTest {
 
 	@Test
 	void shouldSendMessageOnlyForCategorySubscribers() {
-		clientA.addCategory("F1");
-		clientB.addCategory("football");
 		raceResults.addSubscriber(clientA);
 		raceResults.addSubscriber(clientB);
-		message.addCategory("F1");
+
+		when(clientA.getCategories()).thenReturn(List.of("F1", "cycling"));
+		when(clientB.getCategories()).thenReturn(List.of("football"));
+		when(message.getCategory()).thenReturn("F1");
 
 		raceResults.send(message);
 
