@@ -4,16 +4,17 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class RaceResultsServiceTest {
 
-	private RaceResultsService raceResults = new RaceResultsService();
+	private Logger logger = mock(Logger.class);
+
+	private RaceResultsService raceResults = new RaceResultsService(logger);
 
 	private Message message = mock(Message.class);
 
@@ -21,7 +22,6 @@ public class RaceResultsServiceTest {
 
 	private Client clientB = mock(Client.class, "clientB");
 
-	private Logger logger = mock(Logger.class);
 
 	@Test
 	void notSubscribedClientShouldNotReceiveMessage() {
@@ -84,10 +84,13 @@ public class RaceResultsServiceTest {
 
 	@Test
 	void eachSentMessageShouldBeLogged() {
+		String logText = "Message was sent!";
+
+		raceResults.addSubscriber(clientA);
+		raceResults.addSubscriber(clientB);
+
 		raceResults.send(message);
 
-		verify(logger).log(message);
-		verify(logger.getDate(), any());
-		verify(logger.getText(), anyString());
+		verify(logger, times(2)).log(message, logText);
 	}
 }
