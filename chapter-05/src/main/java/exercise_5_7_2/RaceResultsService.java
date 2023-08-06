@@ -7,6 +7,12 @@ public class RaceResultsService {
 
 	private Collection<Client> clients = new HashSet<Client>();
 
+	private Logger logger;
+
+	public RaceResultsService(Logger logger) {
+		this.logger = logger;
+	}
+
 	public void addSubscriber(Client client) {
 		clients.add(client);
 	}
@@ -14,8 +20,9 @@ public class RaceResultsService {
 	public void send(Message message) {
 		for (Client client : clients) {
 			if (client.getCategories().contains(message.getCategory())
-					|| message.getCategory() == null) {
+					|| client.getCategories().isEmpty()) {
 				client.receive(message);
+				logger.log(message, "Message was sent!");
 			}
 		}
 	}
