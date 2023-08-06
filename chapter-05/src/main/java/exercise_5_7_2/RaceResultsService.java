@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 
 public class RaceResultsService {
-	
+
 	private Collection<Client> clients = new HashSet<Client>();
 
 	public void addSubscriber(Client client) {
@@ -13,7 +13,10 @@ public class RaceResultsService {
 
 	public void send(Message message) {
 		for (Client client : clients) {
-			client.receive(message);
+			if (client.getCategories().contains(message.getCategory())
+					|| message.getCategory() == null) {
+				client.receive(message);
+			}
 		}
 	}
 
