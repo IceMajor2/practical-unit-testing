@@ -4,8 +4,11 @@ import java.time.DayOfWeek;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -68,5 +71,18 @@ class BookingServiceTest {
 		bookingService.book("A1", DayOfWeek.SATURDAY, 15, 16);
 
 		verify(roomA1).book(DayOfWeek.SATURDAY, 15, 16);
+	}
+
+	@ParameterizedTest
+	@CsvSource({
+			"-1, -24",
+			"-1, 6",
+			"25, 23",
+			"0, 30"
+	})
+	void throwExceptionOnHourOutOfBounds(int from, int to) {
+		bookingService.addClassroom(roomA1);
+		assertThatExceptionOfType(IllegalArgumentException.class)
+				.isThrownBy(() -> bookingService.book("A1", DayOfWeek.THURSDAY, from, to));
 	}
 }
