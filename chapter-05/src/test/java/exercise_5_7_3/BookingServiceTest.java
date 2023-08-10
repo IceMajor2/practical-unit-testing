@@ -179,4 +179,12 @@ class BookingServiceTest {
 
 		verify(roomB2, never()).book(DayOfWeek.WEDNESDAY, 7, 10);
 	}
+
+	@Test
+	void shouldBookWhenCleaningHourIsOnEdgeOfToParam() {
+		bookingService.addClassroom(roomC3);
+		bookingService.book("C3", DayOfWeek.SUNDAY, 9, 10);
+
+		verify(roomC3).book(DayOfWeek.SUNDAY, 9, 10);
+	}
 }
