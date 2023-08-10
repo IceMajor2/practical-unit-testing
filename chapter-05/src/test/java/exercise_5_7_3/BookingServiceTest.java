@@ -79,9 +79,20 @@ class BookingServiceTest {
 				.isThrownBy(() -> bookingService.getAvailableClassrooms(DayOfWeek.SATURDAY, from, to));
 	}
 
+	@ParameterizedTest
+	@CsvSource({
+			"10, 8",
+			"23, 0",
+			"5, 2"
+	})
+	void shouldThrowExceptionWhenGettingAvailableClassroomsWithInvalidHours(int from, int to) {
+		assertThatExceptionOfType(IllegalArgumentException.class)
+				.isThrownBy(() -> bookingService.getAvailableClassrooms(DayOfWeek.SATURDAY, from, to));
+	}
+
 	@Test
 	void shouldReturnNoClassroomsWhenNoClassroomWasAdded() {
-		assertThat(bookingService.getAvailableClassrooms(DayOfWeek.THURSDAY, 0, 24))
+		assertThat(bookingService.getAvailableClassrooms(DayOfWeek.THURSDAY, 0, 23))
 				.isEmpty();
 	}
 
