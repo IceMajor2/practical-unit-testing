@@ -22,4 +22,9 @@ class BookingServiceTest {
 		assertThat(bookingService.getClassrooms())
 				.containsExactlyInAnyOrder(roomA1, roomB2, roomC3);
 	}
+
+	@Test
+	void shouldReturnNoClassrooms() {
+		assertThat(bookingService.getClassrooms()).isEmpty();
+	}
 }
