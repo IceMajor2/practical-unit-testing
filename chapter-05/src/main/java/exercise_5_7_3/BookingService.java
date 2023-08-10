@@ -18,10 +18,21 @@ public class BookingService {
 	}
 
 	public void book(String classroomName, DayOfWeek day, int from, int to) {
-		throwExceptionWhenNumberIsNotHour(from);
-		throwExceptionWhenNumberIsNotHour(to);
+		isHourValid(from, to);
 		Classroom classroom = this.getByClassroomName(classroomName);
 		classroom.book(day, from, to);
+	}
+	
+	public Collection<Classroom> getAvailableClassrooms(DayOfWeek day, int from, int to) {
+		return this.classrooms.stream()
+				.filter(classroom -> classroom.isAvailable(day, from, to))
+				.collect(Collectors.toCollection(ArrayList::new));
+	}
+
+	private void isHourValid(int from, int to) {
+		throwExceptionWhenNumberIsNotHour(from);
+		throwExceptionWhenNumberIsNotHour(to);
+		if(to < from) throw new IllegalArgumentException();
 	}
 
 	private void throwExceptionWhenNumberIsNotHour(int number) {
@@ -33,11 +44,5 @@ public class BookingService {
 				.filter(classroom -> classroom.getName().equals(classroomName))
 				.findFirst()
 				.orElse(null);
-	}
-
-	public Collection<Classroom> getAvailableClassrooms(DayOfWeek day, int from, int to) {
-		return this.classrooms.stream()
-				.filter(classroom -> classroom.isAvailable(day, from, to))
-				.collect(Collectors.toCollection(ArrayList::new));
 	}
 }
