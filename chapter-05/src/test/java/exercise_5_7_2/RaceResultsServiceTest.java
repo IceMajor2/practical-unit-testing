@@ -2,6 +2,8 @@ package exercise_5_7_2;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.mock;
@@ -67,6 +69,7 @@ public class RaceResultsServiceTest {
 		raceResults.send(message);
 
 		verify(clientA, never()).receive(message);
+		verify(clientB, never()).receive(message);
 	}
 
 	@Test
@@ -103,10 +106,16 @@ public class RaceResultsServiceTest {
 
 		raceResults.send(message);
 		raceResults.send(anotherMessage);
-		
+
 		verify(clientA).receive(message);
 		verify(clientB).receive(message);
 		verify(clientA).receive(anotherMessage);
 		verify(clientB).receive(anotherMessage);
+	}
+
+	@Test
+	void unsubscribingWhenAlreadyUnsubscribedShouldReturnVoid() {
+		assertThatExceptionOfType(IllegalArgumentException.class)
+				.isThrownBy(() -> raceResults.removeSubscriber(clientA));
 	}
 }
