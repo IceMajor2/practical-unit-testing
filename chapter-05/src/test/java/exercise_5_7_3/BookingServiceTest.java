@@ -65,6 +65,9 @@ class BookingServiceTest {
 		when(roomA1.isAvailable(DayOfWeek.FRIDAY, 10, 13)).thenReturn(false);
 		when(roomB2.isAvailable(DayOfWeek.FRIDAY, 10, 15)).thenReturn(true);
 		when(roomC3.isAvailable(DayOfWeek.FRIDAY, 10, 15)).thenReturn(true);
+		when(roomA1.getCleaningHour()).thenReturn(8);
+		when(roomB2.getCleaningHour()).thenReturn(9);
+		when(roomC3.getCleaningHour()).thenReturn(10);
 
 		assertThat(bookingService.getAvailableClassrooms(DayOfWeek.FRIDAY, 10, 15))
 				.containsExactlyInAnyOrder(roomB2, roomC3);
@@ -165,5 +168,14 @@ class BookingServiceTest {
 		bookingService.book("C3", DayOfWeek.TUESDAY, 10, 14, Equipment.PROJECTOR);
 
 		verify(roomC3).book(DayOfWeek.TUESDAY, 10, 14, Equipment.PROJECTOR);
+	}
+
+	@Test
+	void shouldNotBookOnCleaningHour() {
+		// cleaning hour is 9 for B2 (each day)
+		bookingService.addClassroom(roomB2);
+		bookingService.book("B2", DayOfWeek.WEDNESDAY, 7, 10);
+
+		verify(roomB2, never()).book(DayOfWeek.WEDNESDAY, 7, 10);
 	}
 }

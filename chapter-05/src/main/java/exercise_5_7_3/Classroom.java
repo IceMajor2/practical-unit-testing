@@ -1,13 +1,12 @@
 package exercise_5_7_3;
 
 import java.time.DayOfWeek;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class Classroom {
 
-	private Map<DayOfWeek, List<Integer>> bookings = new HashMap<>();
+	public int getCleaningHour() {
+		return -1;
+	}
 
 	public String getName() {
 		return null;
