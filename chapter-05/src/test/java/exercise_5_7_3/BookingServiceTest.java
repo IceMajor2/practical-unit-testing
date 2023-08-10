@@ -54,6 +54,12 @@ class BookingServiceTest {
 	}
 
 	@Test
+	void shouldReturnNoClassroomsWhenNoClassroomWasAdded() {
+		assertThat(bookingService.getAvailableClassrooms(DayOfWeek.THURSDAY, 0, 24))
+				.isEmpty();
+	}
+
+	@Test
 	void enableBookingOfClassroomByName() {
 		when(roomA1.isAvailable(DayOfWeek.SATURDAY, 15, 16))
 				.thenReturn(true);
