@@ -26,7 +26,8 @@ public class BookingService {
 	public void book(String classroomName, DayOfWeek day, int from, int to, Equipment... equipment) {
 		isHourValid(from, to);
 		Classroom classroom = this.getByClassroomName(classroomName);
-		if (classroom != null) {
+		if (classroom != null
+				&& !isWithinCleaningHour(classroom.getCleaningHour(), from, to)) {
 			classroom.book(day, from, to, equipment);
 			LOGGER.info("Booked class '%s' [%s, %d-%d]"
 					.formatted(classroom.getName(), day.name(), from, to));
@@ -38,6 +39,12 @@ public class BookingService {
 		return this.classrooms.stream()
 				.filter(classroom -> classroom.isAvailable(day, from, to))
 				.collect(Collectors.toCollection(ArrayList::new));
+	}
+
+	private boolean isWithinCleaningHour(int cleaningHour, int from, int to) {
+		System.out.println(cleaningHour + " " + from + " " + to);
+		if (from < cleaningHour && to > cleaningHour) return true;
+		return false;
 	}
 
 	private void isHourValid(int from, int to) {
