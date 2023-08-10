@@ -42,7 +42,6 @@ public class BookingService {
 	}
 
 	private boolean isWithinCleaningHour(int cleaningHour, int from, int to) {
-		System.out.println(cleaningHour + " " + from + " " + to);
 		if (from < cleaningHour && to > cleaningHour) return true;
 		return false;
 	}
