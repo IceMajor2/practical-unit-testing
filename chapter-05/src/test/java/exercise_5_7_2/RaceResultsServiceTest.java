@@ -18,6 +18,8 @@ public class RaceResultsServiceTest {
 
 	private Message message = mock(Message.class);
 
+	private Message anotherMessage = mock(Message.class);
+
 	private Client clientA = mock(Client.class, "clientA");
 
 	private Client clientB = mock(Client.class, "clientB");
@@ -92,5 +94,19 @@ public class RaceResultsServiceTest {
 		raceResults.send(message);
 
 		verify(logger, times(2)).log(message, logText);
+	}
+
+	@Test
+	void shouldSentMultipleMessages() {
+		raceResults.addSubscriber(clientA);
+		raceResults.addSubscriber(clientB);
+
+		raceResults.send(message);
+		raceResults.send(anotherMessage);
+		
+		verify(clientA).receive(message);
+		verify(clientB).receive(message);
+		verify(clientA).receive(anotherMessage);
+		verify(clientB).receive(anotherMessage);
 	}
 }
