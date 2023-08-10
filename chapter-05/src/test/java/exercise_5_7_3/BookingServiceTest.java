@@ -32,6 +32,10 @@ class BookingServiceTest {
 		when(roomA1.getName()).thenReturn("A1");
 		when(roomB2.getName()).thenReturn("B2");
 		when(roomC3.getName()).thenReturn("C3");
+
+		when(roomA1.getCleaningHour()).thenReturn(8);
+		when(roomB2.getCleaningHour()).thenReturn(9);
+		when(roomC3.getCleaningHour()).thenReturn(10);
 	}
 
 	@Test
@@ -65,9 +69,6 @@ class BookingServiceTest {
 		when(roomA1.isAvailable(DayOfWeek.FRIDAY, 10, 13)).thenReturn(false);
 		when(roomB2.isAvailable(DayOfWeek.FRIDAY, 10, 15)).thenReturn(true);
 		when(roomC3.isAvailable(DayOfWeek.FRIDAY, 10, 15)).thenReturn(true);
-		when(roomA1.getCleaningHour()).thenReturn(8);
-		when(roomB2.getCleaningHour()).thenReturn(9);
-		when(roomC3.getCleaningHour()).thenReturn(10);
 
 		assertThat(bookingService.getAvailableClassrooms(DayOfWeek.FRIDAY, 10, 15))
 				.containsExactlyInAnyOrder(roomB2, roomC3);
