@@ -6,16 +6,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class BookingServiceTest {
 
+	private Logger logger = mock(Logger.class);
 	private Classroom roomA1 = mock(Classroom.class, "A1");
 	private Classroom roomB2 = mock(Classroom.class, "B2");
 	private Classroom roomC3 = mock(Classroom.class, "C3");
@@ -23,6 +27,8 @@ class BookingServiceTest {
 
 	@BeforeEach
 	void setUp() {
+		bookingService.LOGGER = logger;
+
 		when(roomA1.getName()).thenReturn("A1");
 		when(roomB2.getName()).thenReturn("B2");
 		when(roomC3.getName()).thenReturn("C3");
@@ -105,6 +111,17 @@ class BookingServiceTest {
 		bookingService.book("A1", DayOfWeek.SATURDAY, 15, 16);
 
 		verify(roomA1).book(DayOfWeek.SATURDAY, 15, 16);
+	}
+
+	@Test
+	void shouldLogWhenBookingIsSuccessful() {
+		when(roomC3.isAvailable(DayOfWeek.WEDNESDAY, 8, 10))
+				.thenReturn(true);
+
+		bookingService.addClassroom(roomC3);
+		bookingService.book("C3", DayOfWeek.WEDNESDAY, 8, 10, Equipment.MICROPHONE, Equipment.WHITEBOARD);
+
+		verify(logger).info("Booked class 'C3' [WEDNESDAY, 8-10]");
 	}
 
 	@Test
