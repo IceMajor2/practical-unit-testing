@@ -39,6 +39,13 @@ class BookingServiceTest {
 	}
 
 	@Test
+	void shouldThrowExceptionWhenDoubleAddingClassroom() {
+		bookingService.addClassroom(roomA1);
+		assertThatExceptionOfType(IllegalArgumentException.class)
+				.isThrownBy(() -> bookingService.addClassroom(roomA1));
+	}
+
+	@Test
 	void shouldReturnNoClassrooms() {
 		assertThat(bookingService.getClassrooms()).isEmpty();
 	}
