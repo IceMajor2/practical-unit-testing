@@ -25,7 +25,7 @@ public class BookingService {
 	}
 
 	private void throwExceptionWhenNumberIsNotHour(int number) {
-		if(number < 0 || number > 24) throw new IllegalArgumentException();
+		if(number < 0 || number > 23) throw new IllegalArgumentException();
 	}
 
 	private Classroom getByClassroomName(String classroomName) {
