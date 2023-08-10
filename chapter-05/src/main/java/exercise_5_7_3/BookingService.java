@@ -25,6 +25,7 @@ public class BookingService {
 	}
 
 	public Collection<Classroom> getAvailableClassrooms(DayOfWeek day, int from, int to) {
+		isHourValid(from, to);
 		return this.classrooms.stream()
 				.filter(classroom -> classroom.isAvailable(day, from, to))
 				.collect(Collectors.toCollection(ArrayList::new));
