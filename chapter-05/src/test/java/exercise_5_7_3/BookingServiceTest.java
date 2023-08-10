@@ -85,4 +85,17 @@ class BookingServiceTest {
 		assertThatExceptionOfType(IllegalArgumentException.class)
 				.isThrownBy(() -> bookingService.book("A1", DayOfWeek.THURSDAY, from, to));
 	}
+
+	@ParameterizedTest
+	@CsvSource({
+			"12, 10",
+			"10, 9",
+			"23, 15",
+			"4, 0"
+	})
+	void throwExceptionIfFromHourIsGreaterThanToHour(int from, int to) {
+		bookingService.addClassroom(roomA1);
+		assertThatExceptionOfType(IllegalArgumentException.class)
+				.isThrownBy(() -> bookingService.book("A1", DayOfWeek.THURSDAY, from, to));
+	}
 }
