@@ -20,9 +20,9 @@ public class BookingService {
 	public void book(String classroomName, DayOfWeek day, int from, int to) {
 		isHourValid(from, to);
 		Classroom classroom = this.getByClassroomName(classroomName);
-		classroom.book(day, from, to);
+		if(classroom != null) classroom.book(day, from, to);
 	}
-	
+
 	public Collection<Classroom> getAvailableClassrooms(DayOfWeek day, int from, int to) {
 		return this.classrooms.stream()
 				.filter(classroom -> classroom.isAvailable(day, from, to))
