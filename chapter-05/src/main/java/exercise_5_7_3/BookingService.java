@@ -20,7 +20,7 @@ public class BookingService {
 	public void book(String classroomName, DayOfWeek day, int from, int to, Equipment... equipment) {
 		isHourValid(from, to);
 		Classroom classroom = this.getByClassroomName(classroomName);
-		if(classroom != null) classroom.book(day, from, to);
+		if(classroom != null) classroom.book(day, from, to, equipment);
 	}
 
 	public Collection<Classroom> getAvailableClassrooms(DayOfWeek day, int from, int to) {

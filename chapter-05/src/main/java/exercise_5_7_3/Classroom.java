@@ -1,7 +1,6 @@
 package exercise_5_7_3;
 
 import java.time.DayOfWeek;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
