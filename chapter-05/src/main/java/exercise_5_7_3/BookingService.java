@@ -3,6 +3,7 @@ package exercise_5_7_3;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 public class BookingService {
 
@@ -17,9 +18,12 @@ public class BookingService {
 	}
 
 	public void book(Classroom classroom, DayOfWeek day, int from, int to) {
+		classroom.book(day, from, to);
 	}
 
 	public Collection<Classroom> getAvailableClassrooms(DayOfWeek day, int from, int to) {
-		return null;
+		return this.classrooms.stream()
+				.filter(classroom -> classroom.isAvailable(day, from, to))
+				.collect(Collectors.toCollection(ArrayList::new));
 	}
 }
