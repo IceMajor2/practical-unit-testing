@@ -109,6 +109,11 @@ class BookingServiceTest {
 
 	@Test
 	void enableBookingWithEquipment() {
+		when(roomC3.isAvailable(DayOfWeek.TUESDAY, 10, 14)).thenReturn(true);
 
+		bookingService.addClassroom(roomC3);
+		bookingService.book("C3", DayOfWeek.TUESDAY, 10, 14, Equipment.PROJECTOR);
+
+		verify(roomC3).book(DayOfWeek.TUESDAY, 10, 14, Equipment.PROJECTOR);
 	}
 }

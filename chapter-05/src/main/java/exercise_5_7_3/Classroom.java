@@ -14,7 +14,7 @@ public class Classroom {
 		return null;
 	}
 
-	public void book(DayOfWeek day, int from, int to) {
+	public void book(DayOfWeek day, int from, int to, Equipment... equipment) {
 //		IMPLEMENTATION:
 //		List<Integer> bookedHours = bookings.getOrDefault(day, new ArrayList<>());
 //		for(int i = from; i < to; i++) {
