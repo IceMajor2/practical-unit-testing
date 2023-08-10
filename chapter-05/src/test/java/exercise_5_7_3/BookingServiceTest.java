@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -73,6 +74,13 @@ class BookingServiceTest {
 		verify(roomA1).book(DayOfWeek.SATURDAY, 15, 16);
 	}
 
+	@Test
+	void shouldDoNothingWhenClassroomIsNotInBookingService() {
+		bookingService.book("B2", DayOfWeek.MONDAY, 5, 23);
+
+		verify(roomB2, never()).book(DayOfWeek.MONDAY, 5, 23);
+	}
+
 	@ParameterizedTest
 	@CsvSource({
 			"-1, -24",
@@ -97,5 +105,10 @@ class BookingServiceTest {
 		bookingService.addClassroom(roomA1);
 		assertThatExceptionOfType(IllegalArgumentException.class)
 				.isThrownBy(() -> bookingService.book("A1", DayOfWeek.THURSDAY, from, to));
+	}
+
+	@Test
+	void enableBookingWithEquipment() {
+
 	}
 }
