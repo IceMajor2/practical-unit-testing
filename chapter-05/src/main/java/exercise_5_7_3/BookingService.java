@@ -10,6 +10,7 @@ public class BookingService {
 	private Collection<Classroom> classrooms = new ArrayList<>();
 
 	public void addClassroom(Classroom classroom) {
+		if(this.classrooms.contains(classroom)) throw new IllegalArgumentException();
 		this.classrooms.add(classroom);
 	}
 
