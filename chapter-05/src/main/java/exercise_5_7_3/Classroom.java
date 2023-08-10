@@ -10,6 +10,10 @@ public class Classroom {
 
 	private Map<DayOfWeek, List<Integer>> bookings = new HashMap<>();
 
+	public String getName() {
+		return null;
+	}
+
 	public void book(DayOfWeek day, int from, int to) {
 //		IMPLEMENTATION:
 //		List<Integer> bookedHours = bookings.getOrDefault(day, new ArrayList<>());

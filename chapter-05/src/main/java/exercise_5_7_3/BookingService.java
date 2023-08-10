@@ -17,8 +17,16 @@ public class BookingService {
 		return this.classrooms;
 	}
 
-	public void book(Classroom classroom, DayOfWeek day, int from, int to) {
+	public void book(String classroomName, DayOfWeek day, int from, int to) {
+		Classroom classroom = this.getByClassroomName(classroomName);
 		classroom.book(day, from, to);
+	}
+
+	private Classroom getByClassroomName(String classroomName) {
+		return this.classrooms.stream()
+				.filter(classroom -> classroom.getName().equals(classroomName))
+				.findFirst()
+				.orElse(null);
 	}
 
 	public Collection<Classroom> getAvailableClassrooms(DayOfWeek day, int from, int to) {
