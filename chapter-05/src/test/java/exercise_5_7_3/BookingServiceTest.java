@@ -64,6 +64,21 @@ class BookingServiceTest {
 				.containsExactlyInAnyOrder(roomB2, roomC3);
 	}
 
+	@ParameterizedTest
+	@CsvSource({
+			"-5, 5",
+			"24, 6",
+			"30, 9",
+			"15, 24",
+			"10, 99",
+			"11, -5",
+			"24, 24"
+	})
+	void shouldThrowExceptionWhenGettingAvailableClassroomsWithNonHourNumbers(int from, int to) {
+		assertThatExceptionOfType(IllegalArgumentException.class)
+				.isThrownBy(() -> bookingService.getAvailableClassrooms(DayOfWeek.SATURDAY, from, to));
+	}
+
 	@Test
 	void shouldReturnNoClassroomsWhenNoClassroomWasAdded() {
 		assertThat(bookingService.getAvailableClassrooms(DayOfWeek.THURSDAY, 0, 24))
