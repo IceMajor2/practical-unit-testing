@@ -18,8 +18,14 @@ public class BookingService {
 	}
 
 	public void book(String classroomName, DayOfWeek day, int from, int to) {
+		throwExceptionWhenNumberIsNotHour(from);
+		throwExceptionWhenNumberIsNotHour(to);
 		Classroom classroom = this.getByClassroomName(classroomName);
 		classroom.book(day, from, to);
+	}
+
+	private void throwExceptionWhenNumberIsNotHour(int number) {
+		if(number < 0 || number > 24) throw new IllegalArgumentException();
 	}
 
 	private Classroom getByClassroomName(String classroomName) {
