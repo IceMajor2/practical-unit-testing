@@ -28,6 +28,9 @@ public class RaceResultsService {
 	}
 
 	public void removeSubscriber(Client client) {
+		if(!clients.contains(client)) {
+			throw new IllegalArgumentException();
+		}
 		clients.remove(client);
 	}
 }
