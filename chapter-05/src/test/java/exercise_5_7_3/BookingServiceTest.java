@@ -4,9 +4,9 @@ import java.time.DayOfWeek;
 
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class BookingServiceTest {
 
@@ -36,7 +36,9 @@ class BookingServiceTest {
 		bookingService.addClassroom(roomB2);
 		bookingService.addClassroom(roomC3);
 
-		bookingService.book(roomA1, DayOfWeek.FRIDAY, 10, 13);
+		when(roomA1.isAvailable(DayOfWeek.FRIDAY, 10, 15)).thenReturn(false);
+		when(roomB2.isAvailable(DayOfWeek.FRIDAY, 10, 15)).thenReturn(true);
+		when(roomC3.isAvailable(DayOfWeek.FRIDAY, 10, 15)).thenReturn(true);
 
 		assertThat(bookingService.getAvailableClassrooms(DayOfWeek.FRIDAY, 10, 15))
 				.containsExactlyInAnyOrder(roomB2, roomC3);
