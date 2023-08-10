@@ -1,5 +1,7 @@
 package exercise_5_7_3;
 
+import java.time.DayOfWeek;
+
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
@@ -26,5 +28,18 @@ class BookingServiceTest {
 	@Test
 	void shouldReturnNoClassrooms() {
 		assertThat(bookingService.getClassrooms()).isEmpty();
+	}
+
+	@Test
+	void shouldReturnAvailableClassrooms() {
+		bookingService.addClassroom(roomA1);
+		bookingService.addClassroom(roomB2);
+		bookingService.addClassroom(roomC3);
+
+		bookingService.book(roomA1, DayOfWeek.FRIDAY, 10, 13);
+
+		assertThat(bookingService.getAvailableClassrooms(DayOfWeek.FRIDAY, 10, 15))
+				.containsExactlyInAnyOrder(roomB2, roomC3);
+
 	}
 }
