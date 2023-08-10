@@ -45,7 +45,7 @@ class BookingServiceTest {
 		bookingService.addClassroom(roomB2);
 		bookingService.addClassroom(roomC3);
 
-		when(roomA1.isAvailable(DayOfWeek.FRIDAY, 10, 15)).thenReturn(false);
+		when(roomA1.isAvailable(DayOfWeek.FRIDAY, 10, 13)).thenReturn(false);
 		when(roomB2.isAvailable(DayOfWeek.FRIDAY, 10, 15)).thenReturn(true);
 		when(roomC3.isAvailable(DayOfWeek.FRIDAY, 10, 15)).thenReturn(true);
 
