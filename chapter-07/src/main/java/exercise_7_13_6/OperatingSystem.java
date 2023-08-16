@@ -6,7 +6,7 @@ public class OperatingSystem {
 
 	private String name;
 
-	private String version;
+	private int version;
 
 	private int releaseYear;
 
@@ -26,11 +26,11 @@ public class OperatingSystem {
 		this.name = name;
 	}
 
-	public String getVersion() {
+	public int getVersion() {
 		return version;
 	}
 
-	public void setVersion(String version) {
+	public void setVersion(int version) {
 		this.version = version;
 	}
 
