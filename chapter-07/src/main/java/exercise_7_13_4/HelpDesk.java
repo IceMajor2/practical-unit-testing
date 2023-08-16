@@ -12,6 +12,7 @@ public class HelpDesk {
 	}
 
 	public boolean willHandleIssue(Issue issue) {
+		if(issue == null) throw new NullPointerException();
 		int dayOfWeek = timeProvider.getDay();
 		if(!(dayOfWeek > 0 && dayOfWeek < 8)) throw new IllegalArgumentException();
 		if (Calendar.SUNDAY == dayOfWeek || Calendar.SATURDAY == dayOfWeek) {
