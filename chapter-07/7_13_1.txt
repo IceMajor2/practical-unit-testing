@@ -1,0 +1,25 @@
+Test cases for: public String reverse(String s) { ... }
+
+- happy path: run test with a few typical strings (parameters)
+  and expect to receive them reversed.
+  For example:
+	GIVE				|				EXPECT
+	"hello"								"olleh"
+	"I love Java"						"avaJ evol I"
+	"I'm 21 years old"					"dlo sraey 12 m'I"
+	"kayak"								"kayak"
+
+- run the method with strings that are empty, but consist of whitespace characters.
+  For example:
+	GIVE				|				EXPECT
+	"\n   \t"							"\t   \n"
+	"\n\n\n\t"							"\t\n\n\n"
+	"\t        "						"        \t"
+	"             "						"             "
+	" \r"								"\r "
+
+- run the method with null as param and expect an IllegalArgumentException thrown
+
+- run one test with a very long string and expect to receive it reversed in return
+
+- include the string to have Unicode character specified as, for instance, 'U+0046'
