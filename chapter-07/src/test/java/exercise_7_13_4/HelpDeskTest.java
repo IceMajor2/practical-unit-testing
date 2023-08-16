@@ -66,9 +66,20 @@ class HelpDeskTest {
 	// They make production code way bigger and less readable.
 	// But I'm going by the suggestions in the book.
 	@ParameterizedTest
-	@ValueSource(ints = {8, 9, 10, 93825, -5})
+	@ValueSource(ints = {8, 9, 10, 93825, -5, 0})
 	void willHandleIssue_unexpectedValueFromGetDayDOCTest(int invalidDay) {
 		when(timeProvider.getDay()).thenReturn(invalidDay);
+		when(timeProvider.getHour()).thenReturn(10);
+
+		assertThatExceptionOfType(IllegalArgumentException.class)
+				.isThrownBy(() -> helpDesk.willHandleIssue(issue));
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = {-1, -9234, 24, 25, 21948})
+	void willHandleIssue_unexpectedValueFromGetHourDOCTest(int invalidHour) {
+		when(timeProvider.getHour()).thenReturn(invalidHour);
+		when(timeProvider.getDay()).thenReturn(6);
 
 		assertThatExceptionOfType(IllegalArgumentException.class)
 				.isThrownBy(() -> helpDesk.willHandleIssue(issue));
