@@ -3,12 +3,14 @@ package exercise_7_13_4;
 import java.util.Calendar;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.ArgumentMatchers;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -52,5 +54,11 @@ class HelpDeskTest {
 
 			assertThat(helpDesk.willHandleIssue(issue)).isTrue();
 		});
+	}
+
+	@Test
+	void givenNullAsIssue_whenWillHandleIssue_thenExpectExceptionThrownTest() {
+		assertThatExceptionOfType(NullPointerException.class)
+				.isThrownBy(() -> helpDesk.willHandleIssue(null));
 	}
 }
