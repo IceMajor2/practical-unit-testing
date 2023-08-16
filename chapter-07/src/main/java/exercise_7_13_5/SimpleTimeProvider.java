@@ -16,7 +16,6 @@ public class SimpleTimeProvider implements TimeProvider {
 
 	@Override
 	public boolean isMorning() {
-		System.out.println(calendar.get(Calendar.HOUR_OF_DAY));
 		return calendar.get(Calendar.HOUR_OF_DAY) < 12;
 	}
 }
