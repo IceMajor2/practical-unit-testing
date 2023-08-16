@@ -7,6 +7,10 @@ public class HelpDesk {
 	private TimeProvider timeProvider;
 	public final static int EOB_HOUR = 17;
 
+	public HelpDesk(TimeProvider timeProvider) {
+		this.timeProvider = timeProvider;
+	}
+
 	public boolean willHandleIssue(Issue issue) {
 		int dayOfWeek = timeProvider.getDay();
 		if (Calendar.SUNDAY == dayOfWeek || Calendar.SATURDAY == dayOfWeek) {
