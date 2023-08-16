@@ -14,12 +14,13 @@ public class HelpDesk {
 	public boolean willHandleIssue(Issue issue) {
 		if(issue == null) throw new NullPointerException();
 		int dayOfWeek = timeProvider.getDay();
-		if(!(dayOfWeek > 0 && dayOfWeek < 8)) throw new IllegalArgumentException();
+		if(dayOfWeek < 1 || dayOfWeek > 7) throw new IllegalArgumentException();
 		if (Calendar.SUNDAY == dayOfWeek || Calendar.SATURDAY == dayOfWeek) {
 			return false;
 		}
 		if (Calendar.FRIDAY == dayOfWeek) {
 			int hour = timeProvider.getHour();
+			if(hour < 0 || hour > 23) throw new IllegalArgumentException();
 			if (hour > EOB_HOUR) {
 				return false;
 			}
