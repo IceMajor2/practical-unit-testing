@@ -29,6 +29,10 @@ class HelpDeskTest {
 				10, 11, 12, 13, 14, 15, 16, 17);
 	}
 
+	static Stream<Integer> nonWorkingHoursOnFriday() {
+		return Stream.of(18, 19, 20, 21, 22, 23);
+	}
+
 	static Stream<Integer> workingHours() {
 		return Stream.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
 				10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
@@ -60,6 +64,23 @@ class HelpDeskTest {
 	void givenNullAsIssue_whenWillHandleIssue_thenExpectExceptionThrownTest() {
 		assertThatExceptionOfType(NullPointerException.class)
 				.isThrownBy(() -> helpDesk.willHandleIssue(null));
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = {1, 7}) // '7' = Saturday, '1' = Sunday
+	void willHandleIssueReturnsFalseOnWeekends(int weekendDay) {
+		when(timeProvider.getDay()).thenReturn(weekendDay);
+
+		assertThat(helpDesk.willHandleIssue(issue)).isFalse();
+	}
+
+	@ParameterizedTest
+	@MethodSource("nonWorkingHoursOnFriday")
+	void willHandleIssueReturnsFalseOnFridayAfterClosingTest(int closedHour) {
+		when(timeProvider.getHour()).thenReturn(closedHour);
+		when(timeProvider.getDay()).thenReturn(Calendar.FRIDAY);
+
+		assertThat(helpDesk.willHandleIssue(issue)).isFalse();
 	}
 
 	// I'm unsure whether the below tests should be implemented.
