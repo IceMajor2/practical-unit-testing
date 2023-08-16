@@ -61,4 +61,16 @@ class HelpDeskTest {
 		assertThatExceptionOfType(NullPointerException.class)
 				.isThrownBy(() -> helpDesk.willHandleIssue(null));
 	}
+
+	// I'm unsure whether the below tests should be implemented.
+	// They make production code way bigger and less readable.
+	// But I'm going by the suggestions in the book.
+	@ParameterizedTest
+	@ValueSource(ints = {8, 9, 10, 93825, -5})
+	void willHandleIssue_unexpectedValueFromGetDayDOCTest(int invalidDay) {
+		when(timeProvider.getDay()).thenReturn(invalidDay);
+
+		assertThatExceptionOfType(IllegalArgumentException.class)
+				.isThrownBy(() -> helpDesk.willHandleIssue(issue));
+	}
 }
