@@ -23,6 +23,7 @@ public class OperatingSystemAssert extends AbstractAssert<OperatingSystemAssert,
 	}
 
 	public OperatingSystemAssert wasReleasedIn(int expected) {
+		isNotNull();
 		Assertions.assertThat(actual.getReleaseYear())
 				.withFailMessage("OS release year.\n expected: %d\n but was: %d"
 						.formatted(expected, actual.getReleaseYear()))
@@ -31,10 +32,11 @@ public class OperatingSystemAssert extends AbstractAssert<OperatingSystemAssert,
 	}
 
 	public OperatingSystemAssert hasVersion(int expected) {
+		isNotNull();
 		Assertions.assertThat(actual.getVersion())
 				.withFailMessage("OS version.\n expected: %d\n but was: %d"
 						.formatted(expected, actual.getVersion()))
-				.isEqualTo(9);
+				.isEqualTo(expected);
 		return this;
 	}
 }
