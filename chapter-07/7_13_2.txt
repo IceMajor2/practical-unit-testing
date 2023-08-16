@@ -1,0 +1,49 @@
+TASK: design the test cases for method 'assignPassword()' presented below.
+
+=================================================================
+public class UserServiceImpl {
+
+	private UserDAO userDAO;
+	private SecurityService securityService;
+
+	public void assignPassword(User user) throws Exception {
+		String passwordMd5 = securityService.md5(user.getPassword());
+		user.setPassword(passwordMd5);
+		userDAO.updateUser(user);
+	}
+}
+
+
+=================================================================
+THOUGHTS:
+	* It makes sense to assume that password hashing will be done on
+	  an already checked-for-requirements password, thus the single
+	  responsibility of the 'securityService.md5(String)' will be to
+	  hash the valid password. Not expected to throw any exceptions.
+	* So: the password validator will be in neither UserDAO class nor
+	  SecurityService. It'll be BEFORE them, for example - as it might
+	  have been in Spring Framework, it may take place as a constraint
+	  annotation (i.e. @Size(min = 12)) combined with @Valid in the
+	  controller.
+	* However, 'userDAO.updateUser(User)' besides actually updating
+	  the database, it will need to first check whether the user has
+	  already been saved to db (which is quite weird to save the user
+	  without the password in the first place... but I'm just designing
+	  tests :D). So, this is where an exception might be thrown.
+
+BEFORE_ALL:
+	- mock UserDAO
+	- mock SecurityService
+	- when securityService.md5 then return SOME_MD5_HASH
+
+TEST #1: happy path - pass a user that already exists to the method,
+		 and verify that both 'user.setPassword(String)' &
+		 'userDAO.updateUser(user)' where called
+TEST #2: create a user of unknown identifier (i.e. username). Let the
+		 password be hashed and set, but verify that userDAO.updateUser
+		 throws some kind of exception (i.e. UserNotFoundException)
+TEST #3: make a lot of valid updates (username exists) and expect
+		 userDAO.updateUser to have some limit of requests per user
+TEST #4: make a lot of invalid updates (username not exists) and to
+		 - maybe - block the IP for a couple of minutes due to an
+		 overload of failed requests
