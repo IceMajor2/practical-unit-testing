@@ -8,6 +8,14 @@ public class Transaction {
     private String message;
     private String billingId;
 
+    public Transaction(long id, State state, boolean retryAllowed, String message, String billingId) {
+        this.id = id;
+        this.state = state;
+        this.retryAllowed = retryAllowed;
+        this.message = message;
+        this.billingId = billingId;
+    }
+
     public long getId() {
         return id;
     }
