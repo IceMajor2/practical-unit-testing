@@ -14,7 +14,8 @@
 		<module>chapter-05</module>
 		<module>chapter-07</module>
 		<module>chapter-08</module>
-	</modules>
+        <module>chapter-10</module>
+    </modules>
 
 	<properties>
 		<maven.compiler.source>17</maven.compiler.source>
