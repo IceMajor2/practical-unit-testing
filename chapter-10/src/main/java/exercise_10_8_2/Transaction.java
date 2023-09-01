@@ -1,5 +1,7 @@
 package exercise_10_8_2;
 
+import java.util.Objects;
+
 public class Transaction {
 
     private long id;
@@ -14,6 +16,9 @@ public class Transaction {
         this.retryAllowed = retryAllowed;
         this.message = message;
         this.billingId = billingId;
+    }
+
+    public Transaction() {
     }
 
     public long getId() {
@@ -54,5 +59,18 @@ public class Transaction {
 
     public void setBillingId(String billingId) {
         this.billingId = billingId;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (!(obj instanceof Transaction)) return false;
+        Transaction that = (Transaction) obj;
+
+        return this.id == that.id
+                && this.state == that.state
+                && this.retryAllowed == that.retryAllowed
+                && Objects.equals(this.message, that.message)
+                && Objects.equals(this.billingId, that.billingId);
     }
 }
