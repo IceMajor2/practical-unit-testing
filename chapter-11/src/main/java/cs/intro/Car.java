@@ -8,4 +8,6 @@ public interface Car {
     Color getColor();
 
     Manufacturer getManufacturer();
+
+    boolean isSportsCar();
 }

@@ -14,9 +14,7 @@ public class CarSearch {
     public List<Car> findSportCars() {
         List<Car> sportCars = new ArrayList<Car>();
         for (Car car : cars) {
-            if (car.getEngine().getNbOfCylinders() > 6
-                    && Color.RED == car.getColor()
-                    && "Ferrari".equals(car.getManufacturer().getName())) {
+            if (car.isSportsCar()) {
                 sportCars.add(car);
             }
         }
