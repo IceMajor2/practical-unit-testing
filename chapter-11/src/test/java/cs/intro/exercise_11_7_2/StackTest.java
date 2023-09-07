@@ -2,6 +2,8 @@ package cs.intro.exercise_11_7_2;
 
 import org.junit.jupiter.api.Test;
 
+import java.security.InvalidParameterException;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
@@ -47,6 +49,7 @@ class StackTest {
 
     @Test
     void shouldThrowExceptionOnPushingNullObject() {
-
+        assertThatExceptionOfType(InvalidParameterException.class)
+                .isThrownBy(() -> SUT.push(null));
     }
 }
