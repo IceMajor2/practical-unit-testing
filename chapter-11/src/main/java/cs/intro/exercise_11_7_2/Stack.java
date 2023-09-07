@@ -2,6 +2,8 @@ package cs.intro.exercise_11_7_2;
 
 import linkedlist.LinkedList;
 
+import java.security.InvalidParameterException;
+
 public class Stack<T> {
 
     private LinkedList<T> linkedList = new LinkedList<>();
@@ -13,6 +15,7 @@ public class Stack<T> {
     }
 
     void push(T object) {
+        if(object == null) throw new InvalidParameterException();
         linkedList.add(object);
     }
 
