@@ -1,8 +1,8 @@
-package cs.intro;
+package cs.intro.exercise_11_7_1;
 
+import cs.intro.exercise_11_7_1.Car;
+import cs.intro.exercise_11_7_1.CarSearch;
 import org.junit.jupiter.api.Test;
-
-import java.awt.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;

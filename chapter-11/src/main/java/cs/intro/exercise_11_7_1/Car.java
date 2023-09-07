@@ -1,4 +1,4 @@
-package cs.intro;
+package cs.intro.exercise_11_7_1;
 
 import java.awt.*;
 
