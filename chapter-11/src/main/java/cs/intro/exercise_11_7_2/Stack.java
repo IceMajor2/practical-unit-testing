@@ -17,7 +17,7 @@ public class Stack<T> {
     }
 
     int size() {
-        return 0;
+        return this.linkedList.size();
     }
 
 }

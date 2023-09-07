@@ -30,7 +30,7 @@ class StackTest {
     }
 
     @Test
-    void shouldDecreaseSizeOnPop() {
+    void sizeShouldIncreaseOrDecreaseOnPushOrPop() {
         SUT.push(9.12);
         SUT.push(-71d);
 
@@ -43,11 +43,6 @@ class StackTest {
         SUT.pop();
 
         assertThat(SUT.size()).isEqualTo(0);
-    }
-
-    @Test
-    void shouldIncreaseSizeOnPush() {
-
     }
 
     @Test
