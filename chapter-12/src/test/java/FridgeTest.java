@@ -1,51 +1,59 @@
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class FridgeTest {
 
+    private Fridge fridge = new Fridge();
+
+    private final String PRODUCT_A = "PRODUCT_A";
+    private final String PRODUCT_B = "PRODUCT_B";
+
     @Test
-    void testFridge() {
-        Fridge fridge = new Fridge();
-        fridge.put("cheese");
-        assertEquals(true, fridge.contains("cheese"));
-        assertEquals(false, fridge.put("cheese"));
-        assertEquals(true, fridge.contains("cheese"));
-        assertEquals(false, fridge.contains("ham"));
-        fridge.put("ham");
-        assertEquals(true, fridge.contains("cheese"));
-        assertEquals(true, fridge.contains("ham"));
-        try {
-            fridge.take("sausage");
-            fail("There was no sausage in the fridge!");
-        } catch (NoSuchItemException e) {
-            // ok
-        }
+    void shouldAddItemsToFridge() {
+        fridge.put(PRODUCT_A);
+        assertTrue(fridge.contains(PRODUCT_A), "Should contain product after addition.");
+
+        fridge.put(PRODUCT_B);
+        assertTrue(fridge.contains(PRODUCT_B), "Should contain product after addition.");
     }
 
     @Test
-    void testPutTake() throws NoSuchItemException {
-        Fridge fridge = new Fridge();
-        List<String> food = new ArrayList<>();
-        food.add("yogurt");
-        food.add("milk");
-        food.add("eggs");
-        for (String item : food) {
-            fridge.put(item);
-            assertEquals(true, fridge.contains(item));
-            fridge.take(item);
-            assertEquals(false, fridge.contains(item));
-        }
-        for (String item : food) {
-            try {
-                fridge.take(item);
-                fail("there was no " + item + " in the fridge");
-            } catch (NoSuchItemException e) {
-                assertEquals(true, e.getMessage().contains(item));
-            }
-        }
+    void shouldNotPermitHavingDuplicates() {
+        fridge.put(PRODUCT_A);
+        assertFalse(fridge.put(PRODUCT_A), "Should not permit adding a product twice.");
+    }
+
+    @Test
+    void shouldAllowRestoringSameProduct() throws NoSuchItemException {
+        fridge.put(PRODUCT_A);
+        fridge.take(PRODUCT_A);
+        fridge.put(PRODUCT_A);
+        assertTrue(fridge.contains(PRODUCT_A), "Should allow to re-store (add-take-add) a product.");
+    }
+
+    @Test
+    void shouldNotRemoveItemOnDuplicateAdd() {
+        fridge.put(PRODUCT_A);
+        fridge.put(PRODUCT_A);
+        assertTrue(fridge.contains(PRODUCT_A), "Should not remove item after duplicate was added");
+    }
+
+    @Test
+    void shouldThrowExceptionWhenRemovingNotStoredItem() {
+        assertThrowsExactly(NoSuchItemException.class,
+                () -> fridge.take(PRODUCT_A),
+                "Should throw exception when removing item not in storage.");
+    }
+
+    @Test
+    void shouldThrowExceptionWhenRemovingNotStoredItemWhenFridgeNotEmpty() {
+        fridge.put(PRODUCT_A);
+        assertThrowsExactly(NoSuchItemException.class,
+                () -> fridge.take(PRODUCT_B),
+                "Should throw exception when removing item not in storage that is not empty.");
     }
 }
